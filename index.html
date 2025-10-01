@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Manu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('Manu.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-family: "Poppins", sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .present {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        }
+        
+        .present:hover {
+            transform: scale(1.05);
+        }
+        
+        .box {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff4d6d, #ff8fa3);
+            border-radius: 10px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .ribbon {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, gold, #ffeb3b, gold);
+            width: 20px;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        .ribbon:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -65px;
+            width: 150px;
+            height: 20px;
+            background: linear-gradient(to right, gold, #ffeb3b, gold);
+            transform: translateY(-50%);
+        }
+        
+        .lid {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(135deg, #e63950, #ff758f);
+            border-radius: 10px 10px 0 0;
+            transition: transform 1s ease;
+            z-index: 3;
+            box-shadow: 0 -5px 10px rgba(0,0,0,0.2);
+        }
+        
+        .open .lid {
+            transform: rotate(-120deg) translateY(-100px);
+        }
+
+        /* Enhanced Letter */
+        .letter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 90%;
+            max-width: 380px;
+            min-height: 200px;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 0 10px rgba(255,255,255,0.1);
+            transform: translate(-50%, -50%) scale(0);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+            z-index: 4;
+            opacity: 0;
+            overflow: hidden;
+        }
+        
+        .letter:before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .letter .message {
+            font-size: clamp(18px, 4vw, 24px);
+            font-style: italic;
+            font-weight: bold;
+            color: #8a2be2;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(255,255,255,0.7);
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(45deg, #ff1744, #8a2be2, #3d5afe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 2s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% { filter: drop-shadow(0 0 5px rgba(255, 23, 68, 0.7)); }
+            100% { filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.7)); }
+        }
+        
+        .letter .name {
+            font-size: clamp(24px, 5vw, 32px);
+            font-weight: bold;
+            color: #ff1744;
+            text-shadow: 0 2px 4px rgba(255,255,255,0.7);
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(45deg, #ff1744, #ff9800, #ff1744);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 5px 15px;
+            border-radius: 10px;
+            animation: namePulse 1.5s infinite alternate;
+        }
+        
+        @keyframes namePulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .open .letter {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        /* Balloons */
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: clamp(30px, 8vw, 40px);
+            height: clamp(40px, 10vw, 55px);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in;
+            z-index: 0;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+        }
+        
+        .balloon::after {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            width: 2px;
+            height: 20px;
+            background: #555;
+            transform: translateX(-50%);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-60vh) rotate(5deg); }
+            100% { transform: translateY(-120vh) rotate(-5deg); opacity: 0; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: gold;
+            animation: fall 4s linear infinite;
+            z-index: 1;
+            border-radius: 50%;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff4d6d;
+            animation: heartFloat 8s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes heartFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .present {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .lid {
+                height: 30px;
+                top: -30px;
+            }
+            
+            .letter {
+                padding: 20px;
+                min-height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="present" id="present">
+            <div class="lid"></div>
+            <div class="box"></div>
+            <div class="ribbon"></div>
+            <div class="letter">
+                <div class="message">
+                    🎉 Wish you many more returns of the day 🎉
+                </div>
+                <div class="name">MANU</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Balloons -->
+    <div class="balloon" style="left:10%; background:#ff4d6d; animation-delay:0s;"></div>
+    <div class="balloon" style="left:30%; background:#4dd0e1; animation-delay:2s;"></div>
+    <div class="balloon" style="left:50%; background:#ffd54f; animation-delay:4s;"></div>
+    <div class="balloon" style="left:70%; background:#81c784; animation-delay:1s;"></div>
+    <div class="balloon" style="left:90%; background:#ba68c8; animation-delay:3s;"></div>
+
+    <!-- Floating hearts -->
+    <div class="heart" style="left:15%; animation-delay:0s;">❤️</div>
+    <div class="heart" style="left:45%; animation-delay:3s;">❤️</div>
+    <div class="heart" style="left:75%; animation-delay:6s;">❤️</div>
+
+    <script>
+        const present = document.getElementById('present');
+        let isOpen = false;
+        
+        present.addEventListener('click', () => {
+            isOpen = !isOpen;
+            present.classList.toggle('open');
+            
+            if (isOpen) {
+                // Create confetti only when opening
+                for (let i = 0; i < 50; i++) {
+                    let confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    confetti.style.width = `${5 + Math.random() * 10}px`;
+                    confetti.style.height = confetti.style.width;
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 4000);
+                }
+                
+                // Add more floating hearts
+                for (let i = 0; i < 10; i++) {
+                    let heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.fontSize = `${15 + Math.random() * 20}px`;
+                    heart.style.animationDuration = `${4 + Math.random() * 6}s`;
+                    heart.style.color = `hsl(${Math.random() * 360}, 100%, 65%)`;
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 10000);
+                }
+                
+                // Add subtle bounce effect to the letter
+                const letter = document.querySelector('.letter');
+                letter.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
+                
+                // Add responsive message animation
+                const message = document.querySelector('.message');
+                const name = document.querySelector('.name');
+                
+                message.style.transition = 'all 0.5s ease';
+                name.style.transition = 'all 0.5s ease';
+                
+                setTimeout(() => {
+                    message.style.transform = 'scale(1.05)';
+                    name.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        message.style.transform = 'scale(1)';
+                        name.style.transform = 'scale(1)';
+                    }, 300);
+                }, 800);
+            }
+        });
+        
+        // Add hover effect for the present
+        present.addEventListener('mouseenter', () => {
+            if (!isOpen) {
+                present.style.transform = 'scale(1.05)';
+            }
+        });
+        
+        present.addEventListener('mouseleave', () => {
+            if (!isOpen) {
+                present.style.transform = 'scale(1)';
+            }
+        });
+    </script>
+</body>
+</html>
